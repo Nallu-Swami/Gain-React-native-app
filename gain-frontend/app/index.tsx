@@ -1,12 +1,52 @@
 import React, { useState } from 'react';
 import { Image, StyleSheet, TextInput, View, Text, TouchableOpacity } from 'react-native';
+import { supabase } from './supabaseClient';
 import axios from 'axios';
+
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
-  const senduserdata = ()=>{
-     
-  };
+  //UUID created for every session
+  const generateUUID = () => {
+  let d = new Date().getTime();
+  let d2 = 16 * Math.pow(2, 31) - 1;
+  let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = (d + Math.random() * 16) % 16 | 0;
+    d = Math.floor(d / 16);
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+  return uuid;
+};
+
+const senduserdata = async () => {
+  try {
+    const uuid = generateUUID();
+    console.log(uuid);
+
+    // Insert data into Supabase
+    const { data, error } = await supabase
+      .from('parsed-user-data')
+      .insert([{ uuid, whole_parsed_data: username }]);
+
+    if (error) {
+      console.error('Error inserting data:', error.message);
+    } else {
+      console.log('Data inserted:', data);
+    }
+
+    // Send POST request to localhost:4040/upload
+    const response = await axios.post('http://10.50.48.168:4040/upload', { uuid });
+
+    // Check the response from the POST request
+    if (response.status === 200) {
+      console.log('UUID sent successfully:', response.data);
+    } else {
+      console.error('Failed to send UUID:', response.data);
+    }
+  } catch (error) {
+    console.error('Unexpected error:', error);
+  }
+};
   const handleLogin = async () => {
   console.log(username);
 };
@@ -23,7 +63,7 @@ export default function LoginScreen() {
       <TextInput style={styles.textInput} value={username} onChangeText={setUsername} placeholder="Enter your Details" placeholderTextColor="grey" />
 
       {/* Login Button */}
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      <TouchableOpacity style={styles.button} onPress={senduserdata}>
         <Text style={styles.buttonText}>Enter</Text>
       </TouchableOpacity>
 
