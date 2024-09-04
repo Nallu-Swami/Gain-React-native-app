@@ -56,7 +56,7 @@ Server.post('/upload', async (req, res) => {
         const { uuid } = req.body;
         console.log('Request body:', req.body);
 
-        // Query Supabase
+        // Query Supabase to get the whole_parsed_data based on uuid
         const { data, error } = await supabase
             .from('parsed-user-data')
             .select('whole_parsed_data')
@@ -71,8 +71,8 @@ Server.post('/upload', async (req, res) => {
         console.log('Supabase result:', data);
 
         if (data) {
+            const messageContent = `${data.whole_parsed_data} => Analyze the following text and extract the required details. For fields requiring estimation, use information from user_aim and other details to make informed estimates. If vague or missing, provide do not provide direct assumptions . Use these fields: user_name (full name), user_occupation (current job), user_source_of_income (income source), user_expenses (list of expenses), user_savings (amount saved), user_family_size (number of family members), user_aim (main goal), user_capital_required_for_aim (specific amount needed based on industry estimates), user_time_required_to_obtain_aiminlife (time needed based on resources and savings), user_risk_level (classified as "low" or "high" if mentioned). If any details are unclear or missing, assume "NULL" only if no data is available. Output in the format: {"user_name": "full name", "user_source_of_income": "income source", "user_aim": "main goal", "whole_parsed_data": "parsed data", "user_occupation": "current job", "user_expenses": "list of expenses", "user_savings": "amount saved", "user_family_size": "number of family members", "user_capital_required_for_aim": "amount needed", "user_time_required_to_obtain_aiminlife": "time needed", "user_risk_level": "risk level"}.`;
 
-            const messageContent = `${data.whole_parsed_data} => Analyze the following text and extract the required details: user_name: The full name of the person, user_occupation: The person’s current job or occupation, user_source_of_income: The main source of the person’s income, user_expenses: A list of the person’s regular expenses, user_savings: The amount of money the person has saved, user_family_size: The number of family members, if mentioned, user_aim: The person’s primary goal or aspiration, user_capital_required_for_aim: Estimate the amount of money needed to achieve the aim based on the person's goal, user_time_required_to_obtain_aiminlife: The estimated time needed to achieve the aim (based on the user aim calculate the data required), user_risk_level: Any risks the person is currently facing; if explicitly mentioned, classify the risk as "low" or "high." If any of the above details are not explicitly mentioned or are unclear, do not make assumptions and mark those fields as "NULL." Output the extracted information in the following format: {"user_name": "full name", "user_source_of_income": "income source", "user_aim": "main goal", "whole_parsed_data": "parsed data", "user_occupation": "current job", "user_expenses": "list of expenses", "user_savings": "amount saved", "user_family_size": "number of family members", "user_capital_required_for_aim": "amount needed", "user_time_required_to_obtain_aiminlife": "time needed", "user_risk_level": "risk level"}`;
             const response = await ollama.chat({
                 model: 'llama3',
                 messages: [{ role: 'user', content: messageContent }],
@@ -80,7 +80,47 @@ Server.post('/upload', async (req, res) => {
 
             console.log('Ollama response:', response.message.content);
 
-            res.status(200).send({ message: 'UUID found', whole_parsed_data: data.whole_parsed_data });
+            // Extract and clean JSON string
+            let jsonString = response.message.content.match(/\{.*\}/s)[0];
+            jsonString = jsonString.replace(/NULL/g, 'null')
+                .replace(/\([^)]+\)/g, '') // Removes text in parentheses
+                .replace(/,\s*}/g, '}'); // Fixes trailing commas
+
+            console.log('Cleaned JSON string:', jsonString);
+
+            try {
+                let filter_data = JSON.parse(jsonString);
+                console.log(filter_data);
+
+                const { data: supabaseInsertData, error: supabaseInsertError } = await supabase
+                    .from('parsed-user-data')
+                    .update({
+                        user_name: filter_data.user_name,
+                        user_source_of_income: filter_data.user_source_of_income,
+                        user_aim: filter_data.user_aim,
+                        user_occupation: filter_data.user_occupation,
+                        user_expenses: filter_data.user_expenses,
+                        user_savings: filter_data.user_savings,
+                        user_family_size: filter_data.user_family_size,
+                        user_capital_required_for_aim: filter_data.user_capital_required_for_aim,
+                        user_time_required_to_obtain_aiminlife: filter_data.user_time_required_to_obtain_aiminlife,
+                        user_risk_level: filter_data.user_risk_level,
+                        whole_parsed_data: JSON.stringify(filter_data),
+                    })
+                    .eq('uuid', uuid);
+
+                if (supabaseInsertError) {
+                    console.error('Error inserting/updating Supabase:', supabaseInsertError);
+                    return res.status(500).send({ error: 'Failed to insert or update parsed data in Supabase' });
+                }
+
+                res.status(200).send({ message: 'UUID found and data updated successfully', whole_parsed_data: filter_data });
+
+            } catch (error) {
+                console.error("Error parsing JSON or inserting to Supabase:", error);
+                res.status(500).send({ error: 'Error parsing or storing the data' });
+            }
+
         } else {
             res.status(404).send({ message: 'UUID not found' });
         }
@@ -89,3 +129,5 @@ Server.post('/upload', async (req, res) => {
         res.status(500).send({ error: 'An unexpected error occurred' });
     }
 });
+
+
