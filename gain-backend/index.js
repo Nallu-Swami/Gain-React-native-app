@@ -4,7 +4,6 @@ import supabase from '/Users/aringy/Desktop/MATH/gain-backend/Database/database.
 //Initial Configuration
 config();
 
-
 const Server = express();
 const open_port = process.env.PORT;
 Server.listen(open_port,()=>{
@@ -23,3 +22,4 @@ Server.listen(open_port,()=>{
 //         console.log('Data:', data);
 //     }
 // }
+
