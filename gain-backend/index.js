@@ -1,8 +1,8 @@
 import express from 'express';
 import { config } from 'dotenv';
 import { createClient } from '@supabase/supabase-js';
-import cors from 'cors';  // Corrected import for cors
-
+import cors from 'cors';
+import ollama from 'ollama'
 // Initial Configuration
 config();
 
@@ -54,18 +54,32 @@ Server.use(cors({ origin: true, credentials: true }));
 Server.post('/upload', async (req, res) => {
     try {
         const { uuid } = req.body;
-        console.log(req.body);
+        console.log('Request body:', req.body);
+
+        // Query Supabase
         const { data, error } = await supabase
             .from('parsed-user-data')
             .select('whole_parsed_data')
             .eq('uuid', uuid)
             .single();
+
         if (error) {
             console.error('Error querying Supabase:', error);
             return res.status(500).send({ error: 'Failed to query Supabase' });
         }
+
+        console.log('Supabase result:', data);
+
         if (data) {
-            console.log(data);
+
+            const messageContent = `${data.whole_parsed_data} => Analyze the following text and extract the required details: user_name: The full name of the person, user_occupation: The person’s current job or occupation, user_source_of_income: The main source of the person’s income, user_expenses: A list of the person’s regular expenses, user_savings: The amount of money the person has saved, user_family_size: The number of family members, if mentioned, user_aim: The person’s primary goal or aspiration, user_capital_required_for_aim: Estimate the amount of money needed to achieve the aim based on the person's goal, user_time_required_to_obtain_aiminlife: The estimated time needed to achieve the aim (based on the user aim calculate the data required), user_risk_level: Any risks the person is currently facing; if explicitly mentioned, classify the risk as "low" or "high." If any of the above details are not explicitly mentioned or are unclear, do not make assumptions and mark those fields as "NULL." Output the extracted information in the following format: {"user_name": "full name", "user_source_of_income": "income source", "user_aim": "main goal", "whole_parsed_data": "parsed data", "user_occupation": "current job", "user_expenses": "list of expenses", "user_savings": "amount saved", "user_family_size": "number of family members", "user_capital_required_for_aim": "amount needed", "user_time_required_to_obtain_aiminlife": "time needed", "user_risk_level": "risk level"}`;
+            const response = await ollama.chat({
+                model: 'llama3',
+                messages: [{ role: 'user', content: messageContent }],
+            });
+
+            console.log('Ollama response:', response.message.content);
+
             res.status(200).send({ message: 'UUID found', whole_parsed_data: data.whole_parsed_data });
         } else {
             res.status(404).send({ message: 'UUID not found' });
