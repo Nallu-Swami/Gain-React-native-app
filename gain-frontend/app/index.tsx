@@ -46,6 +46,7 @@ const senduserdata = async () => {
   } catch (error) {
     console.error('Unexpected error:', error);
   }
+  
 };
   const handleLogin = async () => {
   console.log(username);
@@ -57,7 +58,7 @@ const senduserdata = async () => {
       <Text style={styles.upperText}>Welcome aboard!</Text>
       <Text style={styles.upperText1}>Quick and easy—just required provide the information, and we'll take care of the rest!</Text>
       {/* Logo Image */}
-      <Image source={require('/Users/aringy/Desktop/MATH/gain-frontend/assets/images/log.png')} style={styles.image} />
+      <Image source={require('/Users/aringy/Desktop/MATH/gain-frontend/assets/images/Logo.png')} style={styles.image} />
 
       {/* Username Input */}
       <TextInput style={styles.textInput} value={username} onChangeText={setUsername} placeholder="Enter your Details" placeholderTextColor="grey" />
@@ -124,8 +125,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
     marginBottom: 30,
   },
   textInput: {
