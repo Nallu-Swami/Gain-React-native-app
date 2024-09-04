@@ -11,16 +11,15 @@ Server.listen(open_port,()=>{
     console.log(`Server is listening on port ${open_port}`);
 });
 
-async function fetchData() {
-    const { data, error } = await supabase
-        .from('your_table')
-        .select('*');
+//Test function to check database
+// async function fetchData() {
+//     const { data, error } = await supabase
+//         .from('your_table')
+//         .select('*');
 
-    if (error) {
-        console.error('Error fetching data:', error);
-    } else {
-        console.log('Data:', data);
-    }
-}
-
-fetchData();
+//     if (error) {
+//         console.error('Error fetching data:', error);
+//     } else {
+//         console.log('Data:', data);
+//     }
+// }
