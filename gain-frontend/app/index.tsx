@@ -62,7 +62,7 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.upperText}>Welcome aboard!</Text>
-      <Text style={styles.upperText1}>Quick and easy—just required provide the information, and we'll take care of the rest!</Text>
+      <Text style={styles.upperText1}>Provide the information, and we’ll handle the rest for you!</Text>
       <Image source={require('/Users/aringy/Desktop/MATH/gain-frontend/assets/images/Logo.png')} style={styles.image} />
       <TextInput style={styles.textInput} value={username} onChangeText={setUsername} placeholder="Enter your Details" placeholderTextColor="grey" />
       <TouchableOpacity style={styles.button} onPress={senduserdata}>
