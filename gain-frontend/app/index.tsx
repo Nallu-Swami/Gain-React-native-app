@@ -43,7 +43,7 @@ export default function LoginScreen() {
       }
 
       // Send POST request to localhost:4040/upload
-      const response = await axios.post('http://10.50.48.168:4040/upload', { uuid });
+      const response = await axios.post('http://172.20.10.4:4040/upload', { uuid });
 
       // Check the response from the POST request
       if (response.status === 200) {
