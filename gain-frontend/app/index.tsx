@@ -5,8 +5,6 @@ import axios from 'axios';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-
-// Define the navigation stack parameters
 type RootStackParamList = {
   Login: undefined;
   UserDashboard: undefined;
@@ -30,26 +28,20 @@ export default function LoginScreen() {
     try {
       const uuid = generateUUID();
       console.log(uuid);
-
-      // Insert data into Supabase
       const { data, error } = await supabase
         .from('parsed-user-data')
         .insert([{ uuid, whole_parsed_data: username }]);
-
+        
       if (error) {
         console.error('Error inserting data:', error.message);
       } else {
         console.log('Data inserted:', data);
       }
-
-      // Send POST request to localhost:4040/upload
       const response = await axios.post('http://172.20.10.4:4040/upload', { uuid });
 
-      // Check the response from the POST request
       if (response.status === 200) {
         console.log('UUID sent successfully:', response.data);
 
-        // Navigate to UserDashboard after successful operation
         navigation.navigate('UserDashboard');
       } else {
         console.error('Failed to send UUID:', response.data);

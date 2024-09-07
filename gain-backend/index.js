@@ -83,8 +83,8 @@ Server.post('/upload', async (req, res) => {
             // Extract and clean JSON string
             let jsonString = response.message.content.match(/\{.*\}/s)[0];
             jsonString = jsonString.replace(/NULL/g, 'null')
-                .replace(/\([^)]+\)/g, '') // Removes text in parentheses
-                .replace(/,\s*}/g, '}'); // Fixes trailing commas
+                .replace(/\([^)]+\)/g, '') 
+                .replace(/,\s*}/g, '}');
 
             console.log('Cleaned JSON string:', jsonString);
 

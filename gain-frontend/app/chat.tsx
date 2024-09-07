@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 
-// Data definition remains the same
 const data = {
   categorization: {
     name: "Saahil Ahmad",

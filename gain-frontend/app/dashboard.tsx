@@ -4,7 +4,6 @@ import { LineChart, BarChart } from 'react-native-chart-kit';
 
 const screenWidth = Dimensions.get('window').width;
 
-// Function to generate random investment data
 const generateRandomData = () => {
   return {
     mutual_funds: Array.from({ length: 5 }, () => Math.floor(Math.random() * 100)),
@@ -30,7 +29,6 @@ export default function UserData() {
   const [investmentData, setInvestmentData] = useState(generateRandomData());
   
   useEffect(() => {
-    // Generate new random data each time the component mounts
     setInvestmentData(generateRandomData());
   }, []);
 

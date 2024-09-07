@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 import { Tabs } from 'expo-router';
-import { FontAwesome5 } from '@expo/vector-icons'; // Import FontAwesome5 for icons
+import { FontAwesome5 } from '@expo/vector-icons'; 
 
 const _layout = () => {
   return (
@@ -24,7 +24,7 @@ const _layout = () => {
             tabBarIcon: ({ color, size }) => (
               <FontAwesome5 name="comments" size={size} color={color} />
             ),
-            headerShown: false, // Hide the header for this screen
+            headerShown: false,
           }}
         />
         <Tabs.Screen
@@ -34,7 +34,7 @@ const _layout = () => {
             tabBarIcon: ({ color, size }) => (
               <FontAwesome5 name="user" size={size} color={color} />
             ),
-            headerShown: false, // Hide the header for this screen
+            headerShown: false, 
           }}
         />
         <Tabs.Screen
@@ -44,7 +44,7 @@ const _layout = () => {
             tabBarIcon: ({ color, size }) => (
               <FontAwesome5 name="chart-bar" size={size} color={color} />
             ),
-            headerShown: false, // Hide the header for this screen
+            headerShown: false, 
           }}
         />
       </Tabs>
