@@ -2,7 +2,8 @@ import express from 'express';
 import { config } from 'dotenv';
 import { createClient } from '@supabase/supabase-js';
 import cors from 'cors';
-import ollama from 'ollama'
+import ollama from 'ollama';
+
 // Initial Configuration
 config();
 
@@ -18,9 +19,12 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const Server = express();
 const open_port = process.env.PORT || 4040;
 
+// Declare a global variable to store the UUID
+let globalUUID = '';
+
 // Adding middlewares
 Server.use(express.json());
-
+Server.use(cors({ origin: true, credentials: true }));
 
 // Main Server Side Functions
 Server.listen(open_port, () => {
@@ -49,12 +53,15 @@ Server.get('/whole', async (req, res) => {
         res.status(500).json({ error: 'Unexpected error occurred' });
     }
 });
-Server.use(cors({ origin: true, credentials: true }));
 
+// POST request handler for '/upload'
 Server.post('/upload', async (req, res) => {
     try {
         const { uuid } = req.body;
         console.log('Request body:', req.body);
+
+        // Store the uuid in the global variable
+        globalUUID = uuid;
 
         // Query Supabase to get the whole_parsed_data based on uuid
         const { data, error } = await supabase
@@ -83,7 +90,7 @@ Server.post('/upload', async (req, res) => {
             // Extract and clean JSON string
             let jsonString = response.message.content.match(/\{.*\}/s)[0];
             jsonString = jsonString.replace(/NULL/g, 'null')
-                .replace(/\([^)]+\)/g, '') 
+                .replace(/\([^)]+\)/g, '')
                 .replace(/,\s*}/g, '}');
 
             console.log('Cleaned JSON string:', jsonString);
@@ -128,4 +135,10 @@ Server.post('/upload', async (req, res) => {
         console.error('Unexpected error:', error);
         res.status(500).send({ error: 'An unexpected error occurred' });
     }
+});
+
+
+Server.get('/get-global-uuid', (req, res) => {
+    res.send({ globalUUID });
+    console.log(`Global UUID: ${globalUUID}`);
 });
