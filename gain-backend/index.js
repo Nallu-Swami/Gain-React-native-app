@@ -4,10 +4,9 @@ import { createClient } from '@supabase/supabase-js';
 import cors from 'cors';
 import ollama from 'ollama';
 
-// Initial Configuration
+
 config();
 
-// Connection code for Supabase
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 
@@ -19,7 +18,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const Server = express();
 const open_port = process.env.PORT || 4040;
 
-// Declare a global variable to store the UUID
+
 let globalUUID = '';
 
 // Adding middlewares
