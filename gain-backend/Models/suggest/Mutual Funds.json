@@ -1,0 +1,72 @@
+[
+    {
+        "schemeCode": 104515,
+        "schemeName": "Quant Large & Mid Cap Fund - Bonus Option",
+        "returnPercentage": 55.168243334130906,
+        "numberOfNavEntries": 244,
+        "hasDataFrom2024": true
+    },
+    {
+        "schemeCode": 150802,
+        "schemeName": "HDFC NIFTY Private Bank ETF - Growth Option",
+        "returnPercentage": -88.785316394136,
+        "numberOfNavEntries": 246,
+        "hasDataFrom2024": true
+    },
+    {
+        "schemeCode": 149916,
+        "schemeName": "Nippon India Fixed Horizon Fund-XLIII-Series 5- Regular Plan-Payout of IDCW",
+        "returnPercentage": 8.615905433153891,
+        "numberOfNavEntries": 240,
+        "hasDataFrom2024": true
+    },
+    {
+        "schemeCode": 101407,
+        "schemeName": "Baroda BNP Paribas LIQUID FUND-Defunct Plan- IDCW Option",
+        "returnPercentage": 7.259752076310733,
+        "numberOfNavEntries": 273,
+        "hasDataFrom2024": true
+    },
+    {
+        "schemeCode": 119157,
+        "schemeName": "Navi Regular Savings Fund - Direct Plan Monthly IDCW",
+        "returnPercentage": 7.879075242797808,
+        "numberOfNavEntries": 244,
+        "hasDataFrom2024": true
+    },
+    {
+        "schemeCode": 147154,
+        "schemeName": "ITI Liquid Fund - Regular Plan - Daily IDCW Option",
+        "returnPercentage": 0.0,
+        "numberOfNavEntries": 305,
+        "hasDataFrom2024": true
+    },
+    {
+        "schemeCode": 152722,
+        "schemeName": "Edelweiss Business Cycle Fund - Regular Plan - IDCW Option",
+        "returnPercentage": 0.7921659169618965,
+        "numberOfNavEntries": 24,
+        "hasDataFrom2024": true
+    },
+    {
+        "schemeCode": 133628,
+        "schemeName": "Nippon India Retirement Fund- Income Generation Scheme- Growth Plan- Bonus Option",
+        "returnPercentage": 13.975345518613388,
+        "numberOfNavEntries": 240,
+        "hasDataFrom2024": true
+    },
+    {
+        "schemeCode": 141923,
+        "schemeName": "HDFC Housing Opportunities Fund  - Growth Option",
+        "returnPercentage": 46.48605964890967,
+        "numberOfNavEntries": 244,
+        "hasDataFrom2024": true
+    },
+    {
+        "schemeCode": 152541,
+        "schemeName": "Motilal Oswal Nifty Realty ETF",
+        "returnPercentage": 21.651883308371385,
+        "numberOfNavEntries": 111,
+        "hasDataFrom2024": true
+    }
+]

@@ -1,0 +1,65 @@
+{
+    "age_groups": {
+      "20-30": {
+        "low_risk": {
+          "mutual_funds": "40%",
+          "gold": "20%",
+          "FDs": "40%",
+          "stocks": "0%"
+        },
+        "medium_risk": {
+          "mutual_funds": "30%",
+          "gold": "20%",
+          "FDs": "20%",
+          "stocks": "30%"
+        },
+        "high_risk": {
+          "mutual_funds": "20%",
+          "gold": "10%",
+          "FDs": "10%",
+          "stocks": "60%"
+        }
+      },
+      "31-50": {
+        "low_risk": {
+          "mutual_funds": "50%",
+          "gold": "20%",
+          "FDs": "20%",
+          "stocks": "10%"
+        },
+        "medium_risk": {
+          "mutual_funds": "40%",
+          "gold": "20%",
+          "FDs": "20%",
+          "stocks": "20%"
+        },
+        "high_risk": {
+          "mutual_funds": "30%",
+          "gold": "10%",
+          "FDs": "10%",
+          "stocks": "50%"
+        }
+      },
+      "51+": {
+        "low_risk": {
+          "mutual_funds": "60%",
+          "gold": "20%",
+          "FDs": "10%",
+          "stocks": "10%"
+        },
+        "medium_risk": {
+          "mutual_funds": "50%",
+          "gold": "20%",
+          "FDs": "10%",
+          "stocks": "20%"
+        },
+        "high_risk": {
+          "mutual_funds": "40%",
+          "gold": "10%",
+          "FDs": "10%",
+          "stocks": "40%"
+        }
+      }
+    }
+  }
+  

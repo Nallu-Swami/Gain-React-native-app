@@ -20,21 +20,11 @@ const _layout = () => {
         <Tabs.Screen
           name="chat"
           options={{
-            tabBarLabel: 'Chat',
+            tabBarLabel: 'Info',
             tabBarIcon: ({ color, size }) => (
-              <FontAwesome5 name="comments" size={size} color={color} />
+              <FontAwesome5 name="info-circle" size={size} color={color} />
             ),
             headerShown: false,
-          }}
-        />
-        <Tabs.Screen
-          name="userdata"
-          options={{
-            tabBarLabel: 'User Data',
-            tabBarIcon: ({ color, size }) => (
-              <FontAwesome5 name="user" size={size} color={color} />
-            ),
-            headerShown: false, 
           }}
         />
         <Tabs.Screen

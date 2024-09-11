@@ -4,9 +4,9 @@ import { createClient } from '@supabase/supabase-js';
 import cors from 'cors';
 import ollama from 'ollama';
 
-
 config();
 
+// Connection code for Supabase
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 
@@ -18,12 +18,8 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const Server = express();
 const open_port = process.env.PORT || 4040;
 
-
-let globalUUID = '';
-
 // Adding middlewares
 Server.use(express.json());
-Server.use(cors({ origin: true, credentials: true }));
 
 // Main Server Side Functions
 Server.listen(open_port, () => {
@@ -53,14 +49,12 @@ Server.get('/whole', async (req, res) => {
     }
 });
 
-// POST request handler for '/upload'
+Server.use(cors({ origin: true, credentials: true }));
+
 Server.post('/upload', async (req, res) => {
     try {
         const { uuid } = req.body;
         console.log('Request body:', req.body);
-
-        // Store the uuid in the global variable
-        globalUUID = uuid;
 
         // Query Supabase to get the whole_parsed_data based on uuid
         const { data, error } = await supabase
@@ -77,8 +71,9 @@ Server.post('/upload', async (req, res) => {
         console.log('Supabase result:', data);
 
         if (data) {
-            const messageContent = `${data.whole_parsed_data} => Analyze the following text and extract the required details. For fields requiring estimation, use information from user_aim and other details to make informed estimates. If vague or missing, provide do not provide direct assumptions . Use these fields: user_name (full name), user_occupation (current job), user_source_of_income (income source), user_expenses (list of expenses), user_savings (amount saved), user_family_size (number of family members), user_aim (main goal), user_capital_required_for_aim (specific amount needed based on industry estimates), user_time_required_to_obtain_aiminlife (time needed based on resources and savings), user_risk_level (classified as "low" or "high" if mentioned). If any details are unclear or missing, assume "NULL" only if no data is available. Output in the format: {"user_name": "full name", "user_source_of_income": "income source", "user_aim": "main goal", "whole_parsed_data": "parsed data", "user_occupation": "current job", "user_expenses": "list of expenses", "user_savings": "amount saved", "user_family_size": "number of family members", "user_capital_required_for_aim": "amount needed", "user_time_required_to_obtain_aiminlife": "time needed", "user_risk_level": "risk level"}.`;
+            const messageContent = `${data.whole_parsed_data}=> Analyze the following text and extract the required details. For fields requiring estimation, use information from user_aim and other details to make informed estimates. If vague or missing, do not provide direct assumptions. Use these fields: user_name (full name), user_occupation (current job), user_source_of_income (income source), user_expenses (list of expenses), user_savings (amount saved), user_family_size (number of family members), user_aim (main goal), user_capital_required_for_aim (specific amount needed based on industry estimates), user_time_required_to_obtain_aiminlife (time needed based on resources and savings), user_risk_level (classified as "low" or "high" if mentioned). If any details are unclear or missing, assume "NULL" only if no data is available. Output in the format: {"user_name": "full name", "user_source_of_income": "income source", "user_aim": "main goal", "whole_parsed_data": "parsed data", "user_occupation": "current job", "user_expenses": "list of expenses", "user_savings": "amount saved", "user_family_size": "number of family members", "user_capital_required_for_aim": "amount needed", "user_time_required_to_obtain_aiminlife": "time needed", "user_risk_level": "risk level"} make sure to only return in JSON format only dont add anything else into it.`;
 
+            // Await Ollama response
             const response = await ollama.chat({
                 model: 'llama3',
                 messages: [{ role: 'user', content: messageContent }],
@@ -86,16 +81,23 @@ Server.post('/upload', async (req, res) => {
 
             console.log('Ollama response:', response.message.content);
 
-            // Extract and clean JSON string
-            let jsonString = response.message.content.match(/\{.*\}/s)[0];
-            jsonString = jsonString.replace(/NULL/g, 'null')
-                .replace(/\([^)]+\)/g, '')
+            // Safely extract and clean the JSON from the response
+            let jsonString = response.message.content.match(/\{.*\}/s)?.[0];
+            if (!jsonString) {
+                throw new Error('Invalid JSON response from Ollama');
+            }
+
+            // Clean the JSON string (fixing $ sign and parentheses)
+            jsonString = jsonString
+                .replace(/NULL/g, 'null')
+                .replace(/\([^)]+\)/g, '')  // Remove estimated annotations
+                .replace(/\$\s?([0-9,.]+)\s?[-–]\s?\$\s?([0-9,.]+)/g, '"$1 - $2"')  // Replace $ with a valid range string
                 .replace(/,\s*}/g, '}');
 
             console.log('Cleaned JSON string:', jsonString);
 
             try {
-                let filter_data = JSON.parse(jsonString);
+                let filter_data = JSON.parse(jsonString); // Attempt to parse JSON
                 console.log(filter_data);
 
                 const { data: supabaseInsertData, error: supabaseInsertError } = await supabase
@@ -136,8 +138,3 @@ Server.post('/upload', async (req, res) => {
     }
 });
 
-
-Server.get('/get-global-uuid', (req, res) => {
-    res.send({ globalUUID });
-    console.log(`Global UUID: ${globalUUID}`);
-});

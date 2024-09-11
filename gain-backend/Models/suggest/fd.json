@@ -1,0 +1,228 @@
+[
+    {
+      "Bank/Institution": "AXIS Bank",
+      "Tenure": "6 months – 5 years",
+      "Highest Interest Rates": "5.75% – 7.00%"
+    },
+    {
+      "Bank/Institution": "SBI Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "5.50% – 6.50%"
+    },
+    {
+      "Bank/Institution": "Equitas Bank",
+      "Tenure": "7 days – 10 years",
+      "Highest Interest Rates": "3.50% – 7.25%"
+    },
+    {
+      "Bank/Institution": "HDFC Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.50% – 7.00%"
+    },
+    {
+      "Bank/Institution": "ICICI Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.50% – 6.90%"
+    },
+    {
+      "Bank/Institution": "Canara Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "5.50% – 6.70%"
+    },
+    {
+      "Bank/Institution": "Bank of Baroda",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "5.50% – 6.50%"
+    },
+    {
+      "Bank/Institution": "Punjab National Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.50% – 6.50%"
+    },
+    {
+      "Bank/Institution": "IDBI Bank",
+      "Tenure": "3 months – 20 years",
+      "Highest Interest Rates": "4.50% – 4.80%"
+    },
+    {
+      "Bank/Institution": "Indian Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "3.50% – 6.10%"
+    },
+    {
+      "Bank/Institution": "City Union Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "3.00% – 5.25%"
+    },
+    {
+      "Bank/Institution": "Co-operative Banks",
+      "Tenure": "1 year – 5 years",
+      "Highest Interest Rates": "6.00% – 6.35%"
+    },
+    {
+      "Bank/Institution": "Bandhan Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "3.00% – 7.85%"
+    },
+    {
+      "Bank/Institution": "DBS Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "5.00% – 6.50%"
+    },
+    {
+      "Bank/Institution": "Citibank",
+      "Tenure": "3 months – 5 years",
+      "Highest Interest Rates": "1.85% – 3.50%"
+    },
+    {
+      "Bank/Institution": "ICICI Home Finance",
+      "Tenure": "1 year – 10 years",
+      "Highest Interest Rates": "7.25% – 7.50%"
+    },
+    {
+      "Bank/Institution": "Federal Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.75% – 6.60%"
+    },
+    {
+      "Bank/Institution": "AU Small Finance Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.25% – 7.25%"
+    },
+    {
+      "Bank/Institution": "Fincare Small Finance Bank",
+      "Tenure": "3 months – 7 years",
+      "Highest Interest Rates": "5.75% – 7.00%"
+    },
+    {
+      "Bank/Institution": "Jana Small Finance Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "5.00% – 6.50%"
+    },
+    {
+      "Bank/Institution": "Ujjivan Small Finance Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.75% – 6.50%"
+    },
+    {
+      "Bank/Institution": "Utkarsh Small Finance Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.75% – 7.00%"
+    },
+    {
+      "Bank/Institution": "Karnataka Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.00% – 5.80%"
+    },
+    {
+      "Bank/Institution": "Karur Vysya Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "5.25% – 6.65%"
+    },
+    {
+      "Bank/Institution": "Jammu and Kashmir Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.60% – 6.50%"
+    },
+    {
+      "Bank/Institution": "South Indian Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "3.50% – 5.50%"
+    },
+    {
+      "Bank/Institution": "Punjab and Sind Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.25% – 6.25%"
+    },
+    {
+      "Bank/Institution": "Standard Chartered Bank",
+      "Tenure": "7 days – 5 years",
+      "Highest Interest Rates": "2.75% – 6.75%"
+    },
+    {
+      "Bank/Institution": "HSBC Bank",
+      "Tenure": "7 days – 5 years",
+      "Highest Interest Rates": "2.85% – 6.00%"
+    },
+    {
+      "Bank/Institution": "Shriram Transport Finance",
+      "Tenure": "1 year – 5 years",
+      "Highest Interest Rates": "7.80% – 8.60%"
+    },
+    {
+      "Bank/Institution": "Tamilnad Mercantile Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "5.25% – 6.50%"
+    },
+    {
+      "Bank/Institution": "IndusInd Bank",
+      "Tenure": "7 days – 3 years",
+      "Highest Interest Rates": "3.50% – 7.25%"
+    },
+    {
+      "Bank/Institution": "Bank of Maharashtra",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.75% – 6.00%"
+    },
+    {
+      "Bank/Institution": "Central Bank of India",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.75% – 6.25%"
+    },
+    {
+      "Bank/Institution": "Kotak Mahindra Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.00% – 6.20%"
+    },
+    {
+      "Bank/Institution": "DHFL",
+      "Tenure": "1 year – 10 years",
+      "Highest Interest Rates": "8.25% – 8.95%"
+    },
+    {
+      "Bank/Institution": "DCB Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.75% – 7.25%"
+    },
+    {
+      "Bank/Institution": "UCO Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.50% – 6.10%"
+    },
+    {
+      "Bank/Institution": "Yes Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.75% – 7.00%"
+    },
+    {
+      "Bank/Institution": "Bank of India",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.50% – 6.00%"
+    },
+    {
+      "Bank/Institution": "Union Bank of India",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "3.50% – 6.50%"
+    },
+    {
+      "Bank/Institution": "RBL Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.75% – 7.00%"
+    },
+    {
+      "Bank/Institution": "Indian Overseas Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.50% – 6.50%"
+    },
+    {
+      "Bank/Institution": "IDFC Bank",
+      "Tenure": "3 months – 10 years",
+      "Highest Interest Rates": "4.50% – 7.00%"
+    },
+    {
+      "Bank/Institution": "LIC Housing Finance",
+      "Tenure": "1 year – 10 years",
+      "Highest Interest Rates": "6.50% – 7.20%"
+    }
+  ]
+  
