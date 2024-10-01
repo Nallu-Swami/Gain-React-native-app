@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, TextInput, View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { StyleSheet, TextInput, View, Text, TouchableOpacity, ScrollView, Image, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native';
 import { supabase } from './supabaseClient';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
@@ -99,15 +99,23 @@ export default function ChatScreen() {
   }, [messages]);
 
   return (
-    <View style={styles.container}>
-      {/* App Bar Section */}
-      <View style={styles.appBar}>
-        <Text style={styles.appBarTitle}>Nami</Text>
-        <Image
-          source={require('../assets/images/logooo.png')} // Adjust the path accordingly
-          style={styles.logo}
-        />
-      </View>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // Adjust behavior for iOS/Android
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0} // Offset to adjust keyboard
+    >
+      {/* SafeAreaView to handle the safe areas */}
+      <SafeAreaView>
+        {/* App Bar Section */}
+        <View style={styles.appBar}>
+          <Text style={styles.appBarTitle}>Nami</Text>
+          <Image
+            source={require('../assets/images/logooo.png')} // Adjust the path accordingly
+            style={styles.logo}
+          />
+        </View>
+      </SafeAreaView>
+      
       <ScrollView style={styles.chatContainer} ref={scrollViewRef}>
         {messages.map((message, index) => (
           <View key={index} style={message.sender === 'user' ? styles.userMessage : styles.botMessage}>
@@ -127,7 +135,7 @@ export default function ChatScreen() {
           <Text style={styles.buttonText}>Send</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -144,13 +152,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    backgroundColor: '#444', // Adjust the color as needed
+    backgroundColor: '#FFF', // Adjust the color as needed
     borderRadius: 10,
     marginBottom: 10,
   },
   appBarTitle: {
     fontSize: 20,
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
   },
   logo: {
