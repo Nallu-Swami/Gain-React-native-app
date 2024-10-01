@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    backgroundColor: '#FFF', // Adjust the color as needed
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
     marginBottom: 10,
   },
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   logo: {
-    width: 40, // Adjust logo size as needed
+    width: 40,
     height: 40,
   },
   chatContainer: {
@@ -175,6 +175,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignSelf: 'flex-end',
     marginVertical: 5,
+    borderColor: 'white', // Add white border color
+    borderWidth: 2, // Set border width
   },
   botMessage: {
     backgroundColor: '#444',
@@ -182,6 +184,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignSelf: 'flex-start',
     marginVertical: 5,
+    borderColor: 'white', // Add white border color
+    borderWidth: 2, // Set border width
   },
   messageText: {
     color: 'white',
@@ -212,3 +216,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+

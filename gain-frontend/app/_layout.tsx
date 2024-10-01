@@ -38,6 +38,8 @@ const _layout = () => {
           }}
         />
       </Tabs>
+      
+      
     </View>
   );
 };
