@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, TextInput, View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, TextInput, View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { supabase } from './supabaseClient';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 // Define a type for the message object
 type Message = {
@@ -29,17 +28,25 @@ export default function ChatScreen() {
   const senduserdata = async () => {
     try {
       const uuid = generateUUID();
-      console.log(uuid);
+      console.log('Generated UUID:', uuid);
+
+      // Insert data into Supabase
       const { data, error } = await supabase
         .from('parsed-user-data')
         .insert([{ uuid, whole_parsed_data: username }]);
-      
+
       if (error) {
-        console.error('Error inserting data:', error.message);
-      } else {
-        console.log('Data inserted:', data);
+        console.error('Error inserting data into Supabase:', error.message);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: 'Error inserting data into Supabase', sender: 'bot' },
+        ]);
+        return; // Exit if there is an error
       }
 
+      console.log('Data inserted into Supabase:', data);
+
+      // Send UUID to the server
       const response = await axios.post('http://172.20.10.4:4040/upload', { uuid });
 
       if (response.status === 200) {
@@ -57,11 +64,20 @@ export default function ChatScreen() {
         ]);
       }
     } catch (error) {
-      console.error('Unexpected error:', error);
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: 'Unexpected error occurred', sender: 'bot' },
-      ]);
+      // Handle unexpected errors
+      if (axios.isAxiosError(error)) {
+        console.error('Axios error:', error.response?.data || error.message);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: 'Error sending UUID. Server response: ' + (error.response?.data || 'No response'), sender: 'bot' },
+        ]);
+      } else {
+        console.error('Unexpected error:', error);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: 'Unexpected error occurred', sender: 'bot' },
+        ]);
+      }
     }
   };
 
@@ -84,6 +100,14 @@ export default function ChatScreen() {
 
   return (
     <View style={styles.container}>
+      {/* App Bar Section */}
+      <View style={styles.appBar}>
+        <Text style={styles.appBarTitle}>Nami</Text>
+        <Image
+          source={require('../assets/images/logooo.png')} // Adjust the path accordingly
+          style={styles.logo}
+        />
+      </View>
       <ScrollView style={styles.chatContainer} ref={scrollViewRef}>
         {messages.map((message, index) => (
           <View key={index} style={message.sender === 'user' ? styles.userMessage : styles.botMessage}>
@@ -113,6 +137,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#333',
     padding: 20,
+  },
+  appBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: '#444', // Adjust the color as needed
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  appBarTitle: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  logo: {
+    width: 40, // Adjust logo size as needed
+    height: 40,
   },
   chatContainer: {
     flex: 1,
