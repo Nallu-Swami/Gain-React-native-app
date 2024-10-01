@@ -5,99 +5,102 @@ const data = {
   categorization: {
     name: "Saahil Ahmad",
     occupation: "Student",
-    sourceofincome: "Internship for 1 year and PPO afterwards",
-    expenses: "10k for 1 year and 4lac for 4 years",
-    savings: "5k for 1 year and 8 lac for 4 years",
-    familysize: "1",
+    source_of_income: "Internship for 1 year and PPO afterwards",
+    expenses: "5k per month, 60k for 1 year; may rise to 4 lac per year",
+    savings: "5k per month, 60k for 1 year, 8 lac for 4 years",
+    family_size: 1,
     goal: "Car",
-    goal_amount: "30lac",
+    goal_amount: "30 lacs",
     term: "5 years",
-    risk: "High risk"
+    risk: "High"
   },
+  loan_suggestions: [
+    {
+      bank: "SBI",
+      interest_rate: "7.95% p.a. to 10.70% p.a.",
+      processing_fee: "Up to 1% of the loan amount"
+    },
+    {
+      bank: "Indian Bank",
+      interest_rate: "7.65% p.a. to 12.60% p.a.",
+      processing_fee: "Up to 1% of the loan amount"
+    },
+    {
+      bank: "Punjab and Sind Bank (Overdraft)",
+      interest_rate: "9.50% to 10.20%"
+    },
+    {
+      bank: "Bank of Baroda",
+      interest_rate: "8.95% p.a. to 11.25% p.a.",
+      processing_fee: "Up to 1.50% of the loan amount"
+    },
+    {
+      bank: "Karnataka Bank (MSME Loans)",
+      interest_rate: "9.66% to 16.18%"
+    }
+  ],
   investment_breakdown: {
-    mutual_funds: "20%",
-    gold: "10%",
-    fixed_deposits: "10%",
-    stocks: "60%",
-    note: "This investment strategy is aligned with Saahil's high-risk tolerance and has the potential for high returns but also requires regular monitoring."
+    mutual_funds: "40%",
+    gold: "20%",
+    fds: "40%",
+    stocks: "0%",
+    note: "Saahil's high-risk tolerance suggests a focus on mutual funds and FDs."
   },
   mf_schemes: [
     {
-      name: "Aditya Birla Sun Life PSU Equity Fund-Direct - Payout of IDCW",
-      return_percentage: 63.80
+      name: "Quant Large & Mid Cap Fund - Bonus Option",
+      return_percentage: 55.17
     },
     {
-      name: "Kotak Nifty 200 Momentum 30 Index Fund - Regular Plan - Growth Option",
-      return_percentage: 63.76
+      name: "HDFC Housing Opportunities Fund - Growth Option",
+      return_percentage: 46.49
     },
     {
-      name: "quant Multi Asset Fund - IDCW Option - Regular Plan",
-      return_percentage: 44.92
+      name: "Motilal Oswal Nifty Realty ETF",
+      return_percentage: 21.65
     },
     {
-      name: "quant Active Fund-GROWTH OPTION-Direct Plan",
-      return_percentage: 43.08
+      name: "Nippon India Retirement Fund- Income Generation Scheme",
+      return_percentage: 13.98
     },
     {
-      name: "Kotak Multi Asset Allocation Fund - Direct Plan - IDCW Option",
-      return_percentage: 31.65
+      name: "Edelweiss Business Cycle Fund - IDCW Option",
+      return_percentage: 0.79
     }
   ],
   fd_schemes: [
     {
-      name: "Shriram Transport Finance",
-      interest_rate: "7.80% - 8.60%"
+      bank: "DHFL",
+      interest_rate: "8.25% - 8.95%",
+      tenure: "1 year - 10 years"
     },
     {
-      name: "DHFL",
-      interest_rate: "8.25% - 8.95%"
+      bank: "Tamilnad Mercantile Bank",
+      interest_rate: "7.80% - 8.60%",
+      tenure: "1 year - 5 years"
     },
     {
-      name: "Bandhan Bank",
-      interest_rate: "3.00% - 7.85%"
+      bank: "Kotak Mahindra Bank",
+      interest_rate: "4.00% - 6.20%",
+      tenure: "3 months - 10 years"
     },
     {
-      name: "ICICI Home Finance",
-      interest_rate: "7.25% - 7.50%"
+      bank: "Central Bank of India",
+      interest_rate: "4.75% - 6.25%",
+      tenure: "3 months - 10 years"
     },
     {
-      name: "DCB Bank",
-      interest_rate: "4.75% - 7.25%"
+      bank: "RBL Bank",
+      interest_rate: "4.75% - 7.00%",
+      tenure: "3 months - 10 years"
     }
   ],
   final_comparison: {
     mutual_funds_savings: 2895200,
     fixed_deposits_savings: 562000,
     total_savings_after_4_years: 3057200,
-    note: "The total amount is more than enough to achieve Saahil's goal of buying a car worth 30 lac in 5 years."
+    note: "The total amount is enough to buy a car worth ₹30 lacs in 5 years."
   },
-  loan_suggestions: [
-    {
-      bank: "Bank Of Baroda",
-      interest_rate: "7.35% - 9.10%",
-      emi_range: "59,585 - 62,264"
-    },
-    {
-      bank: "Bank of Maharashtra",
-      interest_rate: "7.70% - 8.45%",
-      emi_range: "60,160 - 61,603"
-    },
-    {
-      bank: "Canara Bank",
-      interest_rate: "7.30% - 9.90%",
-      emi_range: "59,370 - 63,252"
-    },
-    {
-      bank: "Central Bank of India",
-      interest_rate: "7.25% - 7.50%",
-      emi_range: "59,287 - 59,678"
-    },
-    {
-      bank: "Corporation Bank",
-      interest_rate: "7.40% - 7.50%",
-      emi_range: "59,509 - 59,678"
-    }
-  ]
 };
 
 interface SectionProps {
@@ -110,139 +113,122 @@ interface DetailProps {
   value: string;
 }
 
+const Detail: React.FC<DetailProps> = ({ label, value }) => (
+  <View style={styles.detailRow}>
+    <Text style={styles.detailLabel}>{label}:</Text>
+    <Text style={styles.detailValue}>{value}</Text>
+  </View>
+);
+
+const Section: React.FC<SectionProps> = ({ title, children }) => (
+  <View style={styles.card}>
+    <Text style={styles.cardTitle}>{title}</Text>
+    <View style={styles.cardContent}>{children}</View>
+  </View>
+);
+
 const App: React.FC = () => {
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Personal Information</Text>
-        <View style={styles.cardContent}>
-          <Detail label="Name" value={data.categorization.name} />
-          <Detail label="Occupation" value={data.categorization.occupation} />
-          <Detail label="Source of Income" value={data.categorization.sourceofincome} />
-          <Detail label="Expenses" value={data.categorization.expenses} />
-          <Detail label="Savings" value={data.categorization.savings} />
-          <Detail label="Family Size" value={data.categorization.familysize} />
-          <Detail label="Goal" value={data.categorization.goal} />
-          <Detail label="Goal Amount" value={data.categorization.goal_amount} />
-          <Detail label="Term" value={data.categorization.term} />
-          <Detail label="Risk" value={data.categorization.risk} />
-        </View>
-      </View>
+      <Section title="Personal Information">
+        <Detail label="Name" value={data.categorization.name} />
+        <Detail label="Occupation" value={data.categorization.occupation} />
+        <Detail label="Source of Income" value={data.categorization.source_of_income} />
+        <Detail label="Expenses" value={data.categorization.expenses} />
+        <Detail label="Savings" value={data.categorization.savings} />
+        <Detail label="Family Size" value={data.categorization.family_size.toString()} />
+        <Detail label="Goal" value={data.categorization.goal} />
+        <Detail label="Goal Amount" value={data.categorization.goal_amount} />
+        <Detail label="Term" value={data.categorization.term} />
+        <Detail label="Risk" value={data.categorization.risk} />
+      </Section>
 
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Investment Breakdown</Text>
-        <View style={styles.cardContent}>
-          <Detail label="Mutual Funds" value={data.investment_breakdown.mutual_funds} />
-          <Detail label="Gold" value={data.investment_breakdown.gold} />
-          <Detail label="Fixed Deposits" value={data.investment_breakdown.fixed_deposits} />
-          <Detail label="Stocks" value={data.investment_breakdown.stocks} />
-          <Text style={styles.note}>{data.investment_breakdown.note}</Text>
-        </View>
-      </View>
+      <Section title="Investment Breakdown">
+        <Detail label="Mutual Funds" value={data.investment_breakdown.mutual_funds} />
+        <Detail label="Gold" value={data.investment_breakdown.gold} />
+        <Detail label="FDs" value={data.investment_breakdown.fds} />
+        <Detail label="Stocks" value={data.investment_breakdown.stocks} />
+        <Detail label="Note" value={data.investment_breakdown.note} />
+      </Section>
 
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Mutual Fund Schemes</Text>
-        <View style={styles.cardContent}>
-          {data.mf_schemes.map((scheme, index) => (
-            <Detail key={index} label={scheme.name} value={`${scheme.return_percentage}%`} />
-          ))}
-        </View>
-      </View>
+      <Section title="Mutual Fund Schemes">
+        {data.mf_schemes.map((scheme, index) => (
+          <Detail key={index} label={scheme.name} value={`${scheme.return_percentage}%`} />
+        ))}
+      </Section>
 
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Fixed Deposit Schemes</Text>
-        <View style={styles.cardContent}>
-          {data.fd_schemes.map((scheme, index) => (
-            <Detail key={index} label={scheme.name} value={scheme.interest_rate} />
-          ))}
-        </View>
-      </View>
+      <Section title="Fixed Deposit Schemes">
+        {data.fd_schemes.map((scheme, index) => (
+          <Detail key={index} label={scheme.bank} value={`${scheme.interest_rate} (Tenure: ${scheme.tenure})`} />
+        ))}
+      </Section>
 
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Final Comparison</Text>
-        <View style={styles.cardContent}>
-          <Detail label="Mutual Funds Savings" value={`₹${data.final_comparison.mutual_funds_savings}`} />
-          <Detail label="Fixed Deposits Savings" value={`₹${data.final_comparison.fixed_deposits_savings}`} />
-          <Detail label="Total Savings After 4 Years" value={`₹${data.final_comparison.total_savings_after_4_years}`} />
-          <Text style={styles.note}>{data.final_comparison.note}</Text>
-        </View>
-      </View>
+      <Section title="Final Comparison">
+        <Detail label="Mutual Funds Savings" value={`₹${data.final_comparison.mutual_funds_savings}`} />
+        <Detail label="Fixed Deposits Savings" value={`₹${data.final_comparison.fixed_deposits_savings}`} />
+        <Detail label="Total Savings After 4 Years" value={`₹${data.final_comparison.total_savings_after_4_years}`} />
+        <Detail label="Note" value={data.final_comparison.note} />
+      </Section>
 
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Loan Suggestions</Text>
-        <View style={styles.cardContent}>
-          {data.loan_suggestions.map((loan, index) => (
-            <View key={index} style={styles.loan}>
-              <Text style={styles.label}>{loan.bank}</Text>
-              <Text style={styles.loanDetail}>Interest Rate: {loan.interest_rate}</Text>
-              <Text style={styles.loanDetail}>EMI Range: {loan.emi_range}</Text>
-            </View>
-          ))}
-        </View>
-      </View>
+      <Section title="Loan Suggestions">
+        {data.loan_suggestions.map((loan, index) => (
+          <Detail key={index} label={loan.bank} value={`${loan.interest_rate}`} />
+        ))}
+      </Section>
     </ScrollView>
   );
 };
-
-const Detail: React.FC<DetailProps> = ({ label, value }) => (
-  <View style={styles.detail}>
-    <Text style={styles.label}>{label}:</Text>
-    <Text style={styles.value}>{value}</Text>
-  </View>
-);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#1e2638', // Dark blue background
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: '#2c3e50', // Darker card background
+    padding: 20,
     borderRadius: 12,
-    borderWidth: 2, // Increased border thickness
-    borderColor: '#000', // Black border
-    marginBottom: 16,
-    padding: 16,
-    elevation: 8, // Enhanced shadow effect
+    marginBottom: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 }, // Increased shadow offset
-    shadowOpacity: 0.2, // Enhanced shadow opacity
-    shadowRadius: 10, // Increased shadow radius
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+    borderWidth: 1,
+    borderColor: '#34495e', // Slightly lighter border for definition
   },
   cardTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 12,
-    color: '#333',
+    color: '#ecf0f1', // Light gray for better contrast
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
   cardContent: {
-    marginBottom: 12,
+    paddingVertical: 8,
   },
-  detail: {
+  detailRow: {
     flexDirection: 'row',
-    marginBottom: 8,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#34495e', // Slightly lighter border
   },
-  label: {
-    fontWeight: 'bold',
-    marginRight: 8,
-    color: '#555',
+  detailLabel: {
+    fontWeight: '600',
+    fontSize: 15,
+    color: '#bdc3c7', // Light gray for labels
+    flex: 1,
   },
-  value: {
-    color: '#333',
-    fontSize: 16,
-  },
-  note: {
-    fontStyle: 'italic',
-    marginTop: 8,
-    color: '#777',
-  },
-  loan: {
-    marginBottom: 12,
-  },
-  loanDetail: {
-    marginBottom: 4,
-    color: '#555',
+  detailValue: {
+    fontSize: 15,
+    color: '#ecf0f1', // Lighter color for values
+    flex: 1,
+    textAlign: 'right',
   },
 });
 

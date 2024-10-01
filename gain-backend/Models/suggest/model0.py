@@ -64,6 +64,7 @@ def run_parallel_prompts():
         Make sure the response is in pure JSON format with no other kind of data or comments. The response must only be JSON data.
         """
         futures.append(executor.submit(llama_generate, prompt2))
+
         prompt5 = f"""
         Using the profile data below, classify the individual into a category based on the category data and return an investment breakdown for that category. All information should be returned in JSON format only.
 
@@ -84,7 +85,6 @@ def run_parallel_prompts():
         """
         futures.append(executor.submit(llama_generate, prompt3))
 
-
         prompt4 = f"""
         Using the provided fixed deposit data, suggest the top 5 FDs with the best return percentages. Return the data only in JSON format.
 
@@ -93,6 +93,26 @@ def run_parallel_prompts():
         Make sure to return the output strictly as JSON with no other types of responses or explanations.
         """
         futures.append(executor.submit(llama_generate, prompt4))
+
+        # New UTI scheme prompt
+        prompt6 = f"""
+        Using the provided UTI schemes data, suggest the top 5 schemes based on return percentages. The response must be strictly in JSON format.
+
+        UTI Schemes Data:
+        \n{json.dumps(uti_schema, indent=2)}
+        Ensure the response is pure JSON, with no other comments or data.
+        """
+        futures.append(executor.submit(llama_generate, prompt6))
+
+        # UTI scheme returns breakdown prompt
+        prompt7 = f"""
+        Based on the UTI scheme returns data, suggest the best returns over different time periods and output them in JSON format only.
+
+        UTI Scheme Returns Data:
+        \n{json.dumps(uti_schema_data, indent=2)}
+        Return the response strictly as JSON with no other types of responses or explanations.
+        """
+        futures.append(executor.submit(llama_generate, prompt7))
 
         for future in as_completed(futures):
             result = future.result()

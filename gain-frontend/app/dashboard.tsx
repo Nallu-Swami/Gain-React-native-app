@@ -4,32 +4,51 @@ import { LineChart, BarChart } from 'react-native-chart-kit';
 
 const screenWidth = Dimensions.get('window').width;
 
-const generateRandomData = () => {
+// Semi-linear function to generate data points
+const generateSemiLinearData = (slope, intercept, variation, length) => {
+  return Array.from({ length }, (_, index) => {
+    const baseValue = slope * index + intercept; 
+    const randomVariation = Math.random() * variation - variation / 2; 
+    return baseValue + randomVariation;
+  });
+};
+
+const generateSemiLinearInvestmentData = () => {
+  const slope = 10;  // Increase per year
+  const intercept = 50;  // Starting value
+  const variation = 15;  // Allow for some random variation
+  
   return {
-    mutual_funds: Array.from({ length: 5 }, () => Math.floor(Math.random() * 100)),
-    gold: Array.from({ length: 5 }, () => Math.floor(Math.random() * 100)),
-    fixed_deposits: Array.from({ length: 5 }, () => Math.floor(Math.random() * 100)),
-    stocks: Array.from({ length: 5 }, () => Math.floor(Math.random() * 100)),
-    loan: Array.from({ length: 5 }, () => Math.floor(Math.random() * 100)),
+    mutual_funds: generateSemiLinearData(slope, intercept, variation, 5),
+    gold: generateSemiLinearData(slope - 2, intercept - 10, variation, 5),
+    fixed_deposits: generateSemiLinearData(slope + 1, intercept - 5, variation, 5),
+    stocks: generateSemiLinearData(slope + 5, intercept + 10, variation, 5),
+    loan: generateSemiLinearData(-slope + 2, intercept + 20, variation, 5)
   };
 };
 
 const chartConfig = {
-  backgroundColor: "#ffffff",
-  backgroundGradientFrom: "#ffffff",
-  backgroundGradientTo: "#ffffff",
-  color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-  labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+  backgroundColor: "#2c3e50", // Dark blue background
+  backgroundGradientFrom: "#2c3e50",
+  backgroundGradientTo: "#2c3e50",
+  color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+  labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
   strokeWidth: 2,
   barPercentage: 0.5,
   useShadowColorFromDataset: false,
+
+  borderColor: '#000',
+  borderWidth: 2,
+  shadowOffset: { width: 5, height: 10 },
+  shadowOpacity: 0.3,
+  shadowRadius: 15,
 };
 
 export default function UserData() {
-  const [investmentData, setInvestmentData] = useState(generateRandomData());
-  
+  const [investmentData, setInvestmentData] = useState(generateSemiLinearInvestmentData());
+
   useEffect(() => {
-    setInvestmentData(generateRandomData());
+    setInvestmentData(generateSemiLinearInvestmentData());
   }, []);
 
   const labels = ["Year 1", "Year 2", "Year 3", "Year 4", "Year 5"];
@@ -44,31 +63,31 @@ export default function UserData() {
           datasets: [
             {
               data: investmentData.mutual_funds,
-              color: () => '#fbd203',
+              color: () => '#ffd700',
               strokeWidth: 2,
               label: 'Mutual Funds'
             },
             {
               data: investmentData.gold,
-              color: () => '#ffb300',
+              color: () => '#ff9800',
               strokeWidth: 2,
               label: 'Gold'
             },
             {
               data: investmentData.fixed_deposits,
-              color: () => '#ff9100',
+              color: () => '#4caf50',
               strokeWidth: 2,
               label: 'Fixed Deposits'
             },
             {
               data: investmentData.stocks,
-              color: () => '#ff6c00',
+              color: () => '#2196f3',
               strokeWidth: 2,
               label: 'Stocks'
             },
             {
               data: investmentData.loan,
-              color: () => '#ff3c00',
+              color: () => '#e91e63',
               strokeWidth: 2,
               label: 'Loan'
             }
@@ -84,27 +103,28 @@ export default function UserData() {
       
       <View style={styles.legendContainer}>
         <View style={styles.legendItem}>
-          <View style={[styles.legendColorBox, { backgroundColor: '#fbd203' }]} />
+          <View style={[styles.legendColorBox, { backgroundColor: '#ffd700' }]} />
           <Text style={styles.legendText}>Mutual Funds</Text>
         </View>
         <View style={styles.legendItem}>
-          <View style={[styles.legendColorBox, { backgroundColor: '#ffb300' }]} />
+          <View style={[styles.legendColorBox, { backgroundColor: '#ff9800' }]} />
           <Text style={styles.legendText}>Gold</Text>
         </View>
         <View style={styles.legendItem}>
-          <View style={[styles.legendColorBox, { backgroundColor: '#ff9100' }]} />
+          <View style={[styles.legendColorBox, { backgroundColor: '#4caf50' }]} />
           <Text style={styles.legendText}>Fixed Deposits</Text>
         </View>
         <View style={styles.legendItem}>
-          <View style={[styles.legendColorBox, { backgroundColor: '#ff6c00' }]} />
+          <View style={[styles.legendColorBox, { backgroundColor: '#2196f3' }]} />
           <Text style={styles.legendText}>Stocks</Text>
         </View>
         <View style={styles.legendItem}>
-          <View style={[styles.legendColorBox, { backgroundColor: '#ff3c00' }]} />
+          <View style={[styles.legendColorBox, { backgroundColor: '#e91e63' }]} />
           <Text style={styles.legendText}>Loan</Text>
         </View>
       </View>
     </View>
+    
   );
 
   const renderBarChartContainer = () => (
@@ -142,16 +162,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#1e2638', // Dark blue background
   },
   chartContainer: {
     marginBottom: 20,
     marginTop: 30,
     borderRadius: 14,
     borderWidth: 2,
-    borderColor: '#000',
+    borderColor: '#34495e',
     padding: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#2c3e50', // Darker card background
   },
   title: {
     marginTop: 20,
@@ -159,13 +179,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 15,
-    color: '#333',
+    color: '#ecf0f1', // Light text color
   },
   chart: {
     marginRight: 30,
     borderRadius: 16,
     borderWidth: 0,
-    borderColor: '#000',
   },
   legendContainer: {
     marginTop: 20,
@@ -184,10 +203,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginRight: 12,
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: '#ecf0f1',
   },
   legendText: {
     fontSize: 18,
-    color: '#333',
+    color: '#ecf0f1', // Light text color
   },
 });
