@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, ScrollView, Dimensions } from 'react-native';
-import { LineChart, BarChart } from 'react-native-chart-kit';
+import { View, StyleSheet, Text, ScrollView, Dimensions, TextInput, TouchableOpacity, Image } from 'react-native';
+import { LineChart, PieChart, BarChart } from 'react-native-chart-kit';
+import { FontAwesome } from '@expo/vector-icons';
 
 const screenWidth = Dimensions.get('window').width;
 
 // Semi-linear function to generate data points
 const generateSemiLinearData = (slope, intercept, variation, length) => {
   return Array.from({ length }, (_, index) => {
-    const baseValue = slope * index + intercept; 
-    const randomVariation = Math.random() * variation - variation / 2; 
+    const baseValue = slope * index + intercept;
+    const randomVariation = Math.random() * variation - variation / 2;
     return baseValue + randomVariation;
   });
 };
 
 const generateSemiLinearInvestmentData = () => {
-  const slope = 10;  // Increase per year
-  const intercept = 50;  // Starting value
-  const variation = 15;  // Allow for some random variation
+  const slope = 10;
+  const intercept = 50;
+  const variation = 15;
   
   return {
     mutual_funds: generateSemiLinearData(slope, intercept, variation, 5),
@@ -28,20 +29,14 @@ const generateSemiLinearInvestmentData = () => {
 };
 
 const chartConfig = {
-  backgroundColor: "#2c3e50", // Dark blue background
-  backgroundGradientFrom: "#2c3e50",
-  backgroundGradientTo: "#2c3e50",
-  color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-  labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+  backgroundColor: "#ffffff",
+  backgroundGradientFrom: "#ffffff",
+  backgroundGradientTo: "#ffffff",
+  color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+  labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
   strokeWidth: 2,
   barPercentage: 0.5,
   useShadowColorFromDataset: false,
-
-  borderColor: '#000',
-  borderWidth: 2,
-  shadowOffset: { width: 5, height: 10 },
-  shadowOpacity: 0.3,
-  shadowRadius: 15,
 };
 
 export default function UserData() {
@@ -53,9 +48,15 @@ export default function UserData() {
 
   const labels = ["Year 1", "Year 2", "Year 3", "Year 4", "Year 5"];
 
+  const pieChartData = [
+    { name: "Mutual Funds", population: 40, color: "#ffd700", legendFontColor: "#7F8C8D", legendFontSize: 15 },
+    { name: "Gold", population: 30, color: "#ff9800", legendFontColor: "#7F8C8D", legendFontSize: 15 },
+    { name: "Fixed Deposits", population: 30, color: "#4caf50", legendFontColor: "#7F8C8D", legendFontSize: 15 },
+  ];
+
   const renderLineChartContainer = () => (
     <View style={styles.chartContainer}>
-      <Text style={styles.title}>Investment Breakdown</Text>
+      <Text style={styles.title}>Investment Breakdown (Line Chart)</Text>
       
       <LineChart
         data={{
@@ -79,18 +80,6 @@ export default function UserData() {
               strokeWidth: 2,
               label: 'Fixed Deposits'
             },
-            {
-              data: investmentData.stocks,
-              color: () => '#2196f3',
-              strokeWidth: 2,
-              label: 'Stocks'
-            },
-            {
-              data: investmentData.loan,
-              color: () => '#e91e63',
-              strokeWidth: 2,
-              label: 'Loan'
-            }
           ]
         }}
         width={screenWidth - 40}
@@ -114,22 +103,38 @@ export default function UserData() {
           <View style={[styles.legendColorBox, { backgroundColor: '#4caf50' }]} />
           <Text style={styles.legendText}>Fixed Deposits</Text>
         </View>
-        <View style={styles.legendItem}>
-          <View style={[styles.legendColorBox, { backgroundColor: '#2196f3' }]} />
-          <Text style={styles.legendText}>Stocks</Text>
-        </View>
-        <View style={styles.legendItem}>
-          <View style={[styles.legendColorBox, { backgroundColor: '#e91e63' }]} />
-          <Text style={styles.legendText}>Loan</Text>
-        </View>
       </View>
     </View>
-    
+  );
+
+  const renderPieChart = () => (
+    <View style={styles.pieChartContainer}>
+      <Text style={styles.title}>Investment Breakdown (Pie Chart)</Text>
+      <PieChart
+        data={pieChartData}
+        width={screenWidth - 40}
+        height={220}
+        chartConfig={chartConfig}
+        accessor={"population"}
+        backgroundColor={"transparent"}
+        paddingLeft={"15"}
+        center={[10, 0]}
+        absolute
+      />
+      <View style={styles.legendContainer}>
+        {pieChartData.map((item, index) => (
+          <View key={index} style={styles.legendItem}>
+            <View style={[styles.legendColorBox, { backgroundColor: item.color }]} />
+            <Text style={styles.legendText}>{item.name}</Text>
+          </View>
+        ))}
+      </View>
+    </View>
   );
 
   const renderBarChartContainer = () => (
     <View style={styles.chartContainer}>
-      <Text style={styles.title}>Investment Bar Chart</Text>
+      <Text style={styles.title}>Suggested Mutual Funds</Text>
       
       <BarChart
         data={{
@@ -152,6 +157,19 @@ export default function UserData() {
 
   return (
     <ScrollView style={styles.container}>
+      {/* Top section with the logo and greeting */}
+      <View style={styles.headerContainer}>
+        <Image source={require('../assets/images/logooo.png')} style={styles.logo} />
+        <Text style={styles.greeting}>Hello Alex 👋</Text>
+      </View>
+
+      {/* Search bar */}
+      <View style={styles.searchContainer}>
+        <TextInput style={styles.searchInput} placeholder="Click to Chat" placeholderTextColor="#7F8C8D" />
+        <FontAwesome name="search" size={20} color="#000" />
+      </View>
+
+      {renderPieChart()}
       {renderLineChartContainer()}
       {renderBarChartContainer()}
     </ScrollView>
@@ -162,51 +180,83 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#1e2638', // Dark blue background
+    backgroundColor: '#fff',
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  logo: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+    marginRight: 10,
+  },
+  greeting: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f8f8f8',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 20,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  searchInput: {
+    flex: 1,
+    marginRight: 10,
+    fontSize: 16,
+  },
+  pieChartContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
   },
   chartContainer: {
-    marginBottom: 20,
-    marginTop: 30,
+    marginTop: 20,
     borderRadius: 14,
-    borderWidth: 2,
-    borderColor: '#34495e',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
     padding: 10,
-    backgroundColor: '#2c3e50', // Darker card background
+    backgroundColor: '#fff',
   },
   title: {
-    marginTop: 20,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 15,
-    color: '#ecf0f1', // Light text color
+    textAlign: 'left',
+    marginBottom: 10,
   },
   chart: {
-    marginRight: 30,
     borderRadius: 16,
-    borderWidth: 0,
+    marginTop: 10,
   },
   legendContainer: {
     marginTop: 20,
-    marginLeft: 30,
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
   legendItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 5,
   },
   legendColorBox: {
-    width: 24,
-    height: 24,
+    width: 16,
+    height: 16,
+    marginRight: 5,
     borderRadius: 4,
-    marginRight: 12,
-    borderWidth: 1,
-    borderColor: '#ecf0f1',
   },
   legendText: {
-    fontSize: 18,
-    color: '#ecf0f1', // Light text color
+    fontSize: 14,
+    color: '#000',
   },
 });
