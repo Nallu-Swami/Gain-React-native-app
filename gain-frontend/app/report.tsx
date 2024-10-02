@@ -1,7 +1,28 @@
 import React from 'react';
 import { StyleSheet, View, Text, ScrollView, Image } from 'react-native';
 
-const data = {
+// Define the type for the card item props
+interface CardItemProps {
+  name: string;
+  bank: string;
+  amount: string;
+  change: string;
+}
+
+// Define the type for the data
+interface DataItem {
+  name: string;
+  bank: string;
+  amount: string;
+  change: string;
+}
+
+interface Data {
+  final_comparison: DataItem[];
+  suggested_schemes: DataItem[];
+}
+
+const data: Data = {
   final_comparison: [
     { name: "Mutual Fund Saving", bank: "URDAN", amount: "$213.22", change: "+2.49 (8%)" },
     { name: "Mutual Fund Saving", bank: "URDAN", amount: "$213.22", change: "+2.49 (8%)" },
@@ -14,14 +35,26 @@ const data = {
   ]
 };
 
+const CardItem: React.FC<CardItemProps> = ({ name, bank, amount, change }) => (
+  <View style={styles.itemContainer}>
+    <View style={styles.itemTextContainer}>
+      <Text style={styles.itemTitle}>{name}</Text>
+      <Text style={styles.itemSubtitle}>{bank}</Text>
+    </View>
+    <View style={styles.itemAmountContainer}>
+      <Text style={styles.itemAmount}>{amount}</Text>
+      <Text style={styles.itemChange}>{change}</Text>
+    </View>
+  </View>
+);
 
-const App: React.FC = () => {
+const Report: React.FC = () => {
   return (
     <ScrollView style={styles.container}>
       {/* Logo Section */}
       <View style={styles.logoContainer}>
         <Image
-          source={require('../assets/images/logooo.png')} // Replace with the actual path of your logo image
+          source={require('../assets/images/logooo.png')}
           style={styles.logo}
         />
         <Text style={styles.logoText}>GAIN</Text>
@@ -29,7 +62,7 @@ const App: React.FC = () => {
 
       <Text style={styles.reportTitle}>Report</Text>
 
-      {/* Final Comparison Section
+      {/* Final Comparison Section */}
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Final Comparison</Text>
         {data.final_comparison.map((item, index) => (
@@ -41,10 +74,21 @@ const App: React.FC = () => {
             change={item.change}
           />
         ))}
-      </View> */}
+      </View>
 
       {/* Suggested Schemes Section */}
-     ?
+      <View style={styles.card}>
+        <Text style={styles.cardTitle}>Suggested Schemes</Text>
+        {data.suggested_schemes.map((item, index) => (
+          <CardItem
+            key={index}
+            name={item.name}
+            bank={item.bank}
+            amount={item.amount}
+            change={item.change}
+          />
+        ))}
+      </View>
     </ScrollView>
   );
 };
@@ -133,4 +177,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default Report; 

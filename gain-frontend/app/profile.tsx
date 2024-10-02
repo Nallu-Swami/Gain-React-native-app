@@ -9,16 +9,16 @@ const ProfileScreen = () => {
       {/* Logo and GAIN text section */}
       <View style={styles.logoContainer}>
         <Image
-          source={require('../assets/images/logooo.png')} // Ensure the path is correct
+          source={require('../assets/images/logooo.png')} // Make sure the path is correct
           style={styles.logo}
         />
-        <Text style={styles.gainText}>GAIN</Text>
+        <Text style={styles.gainText}>GAIN</Text> {/* Wrapping the GAIN text properly */}
       </View>
 
       {/* User Profile Section */}
       <View style={styles.header}>
         <Image
-          source={require('../assets/images/mark_zuckerberg.png')} // Ensure the image path is correct
+          source={require('../assets/images/mark_zuckerberg.png')} // Make sure the path is correct
           style={styles.profileImage}
         />
         <Text style={styles.name}>MARK ZUCKERBERG</Text>
@@ -51,14 +51,14 @@ const ProfileScreen = () => {
         <Text style={styles.riskText}>My Risk Appetite</Text>
         <View style={styles.gaugeContainer}>
           <AnimatedCircularProgress
-            size={180} // Size of the gauge
-            width={10} // Thickness of the arc
-            fill={75} // Fill percentage representing the risk factor; adjust accordingly
-            arcSweepAngle={180} // Semi-circle
-            rotation={-90} // To make it upward facing
+            size={180}
+            width={10}
+            fill={75}
+            arcSweepAngle={180}
+            rotation={-90}
             lineCap="round"
-            tintColor="#4CAF50" // Green for the main tint
-            backgroundColor="#FF6B6B" // Background color for the unfilled portion
+            tintColor="#4CAF50"
+            backgroundColor="#FF6B6B"
           />
           <View style={styles.textWrapper}>
             <Text style={styles.riskFactor}>821</Text>
@@ -71,13 +71,10 @@ const ProfileScreen = () => {
       <View style={styles.recentInteractions}>
         <Text style={styles.recentText}>Recent Interactions</Text>
         <View style={styles.interactionItem}>
-          <View style={styles.interactionBox}>
-            <Text style={styles.interactionName}>Urdan Inc.</Text>
-            <Text style={styles.interactionPrice}>$213.22</Text>
-            <Text style={styles.interactionChange}>+2.49 (8%)</Text>
-          </View>
+          <Text style={styles.interactionName}>Urdan Inc.</Text>
+          <Text style={styles.interactionPrice}>$213.22</Text>
+          <Text style={styles.interactionChange}>+2.49 (8%)</Text>
         </View>
-        {/* Add more interaction items if needed */}
       </View>
     </ScrollView>
   );
@@ -92,7 +89,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingLeft: 10,
   },
   logo: {
     width: 30,
@@ -135,26 +132,15 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     paddingVertical: 20,
-    paddingHorizontal: 15,
   },
   infoBox: {
-    backgroundColor: '#f9f9f9',
-    padding: 10,
-    borderRadius: 10,
     alignItems: 'center',
-    width: '30%', // Adjust width to evenly space the boxes
-    elevation: 2, // Add shadow for Android
-    shadowColor: '#000', // Add shadow for iOS
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 1.41,
   },
   infoValue: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 5,
   },
   infoLabel: {
     fontSize: 12,
@@ -166,7 +152,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: '#ddd',
-    marginVertical: 10,
   },
   riskText: {
     fontSize: 16,
@@ -179,7 +164,7 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     position: 'absolute',
-    top: '50%', // Adjust the positioning of the text inside the gauge
+    top: '50%',
     alignItems: 'center',
   },
   riskFactor: {
@@ -198,24 +183,25 @@ const styles = StyleSheet.create({
   recentText: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 10,
   },
   interactionItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingVertical: 10,
-  },
-  interactionBox: {
-    backgroundColor: '#f9f9f9',
-    padding: 10,
+    paddingHorizontal: 15,
+    backgroundColor: '#fff',
     borderRadius: 10,
-    elevation: 2, // Shadow for Android
-    shadowColor: '#000', // Shadow for iOS
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 1.41,
+    marginVertical: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+    borderColor: '#ddd',
+    borderWidth: 1,
   },
   interactionName: {
     fontSize: 14,
-    fontWeight: 'bold',
   },
   interactionPrice: {
     fontSize: 14,
