@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import { FontAwesome5, MaterialIcons } from '@expo/vector-icons';
-import Svg, { Path } from 'react-native-svg';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 const ProfileScreen = () => {
   return (
@@ -16,33 +16,31 @@ const ProfileScreen = () => {
       </View>
 
       {/* User Profile Section */}
-      <View style={styles.profileSection}>
+      <View style={styles.header}>
         <Image
           source={require('../assets/images/mark_zuckerberg.png')} // Ensure the image path is correct
           style={styles.profileImage}
         />
-        <View style={styles.profileDetails}>
-          <Text style={styles.profileName}>MARK ZUCKERBERG</Text>
-          <Text style={styles.profileTitle}>CEO, Facebook</Text>
-          <Text style={styles.profileEmail}>markzuckerberg@facebook.com</Text>
-          <Text style={styles.profilePhone}>+91 987654321</Text>
-        </View>
+        <Text style={styles.name}>MARK ZUCKERBERG</Text>
+        <Text style={styles.title}>CEO, Facebook</Text>
+        <Text style={styles.email}>markzuckerberg@facebook.com</Text>
+        <Text style={styles.phone}>+91 987654321</Text>
       </View>
 
       {/* Earnings, Expenditure, and Savings Section */}
       <View style={styles.infoContainer}>
         <View style={styles.infoBox}>
-          <FontAwesome5 name="wallet" size={20} color="#000" />
+          <FontAwesome5 name="wallet" size={24} color="#000" />
           <Text style={styles.infoValue}>50K</Text>
           <Text style={styles.infoLabel}>EARNING</Text>
         </View>
         <View style={styles.infoBox}>
-          <MaterialIcons name="attach-money" size={20} color="#000" />
+          <MaterialIcons name="attach-money" size={24} color="#000" />
           <Text style={styles.infoValue}>30K</Text>
           <Text style={styles.infoLabel}>EXPENDITURE</Text>
         </View>
         <View style={styles.infoBox}>
-          <FontAwesome5 name="piggy-bank" size={20} color="#000" />
+          <FontAwesome5 name="piggy-bank" size={24} color="#000" />
           <Text style={styles.infoValue}>50K</Text>
           <Text style={styles.infoLabel}>SAVINGS</Text>
         </View>
@@ -52,36 +50,16 @@ const ProfileScreen = () => {
       <View style={styles.riskContainer}>
         <Text style={styles.riskText}>My Risk Appetite</Text>
         <View style={styles.gaugeContainer}>
-          <Svg height="200" width="200" viewBox="0 0 200 100">
-            {/* Red Arc */}
-            <Path
-              d="M 10 90 A 90 90 0 0 1 100 10"
-              stroke="#FF6B6B"
-              strokeWidth="10"
-              fill="none"
-            />
-            {/* Pink Arc */}
-            <Path
-              d="M 100 10 A 90 90 0 0 1 145 55"
-              stroke="#F6D6D6"
-              strokeWidth="10"
-              fill="none"
-            />
-            {/* Yellow Arc */}
-            <Path
-              d="M 145 55 A 90 90 0 0 1 180 90"
-              stroke="#FFC300"
-              strokeWidth="10"
-              fill="none"
-            />
-            {/* Green Arc */}
-            <Path
-              d="M 180 90 A 90 90 0 0 1 190 100"
-              stroke="#4CAF50"
-              strokeWidth="10"
-              fill="none"
-            />
-          </Svg>
+          <AnimatedCircularProgress
+            size={180} // Size of the gauge
+            width={10} // Thickness of the arc
+            fill={75} // Fill percentage representing the risk factor; adjust accordingly
+            arcSweepAngle={180} // Semi-circle
+            rotation={-90} // To make it upward facing
+            lineCap="round"
+            tintColor="#4CAF50" // Green for the main tint
+            backgroundColor="#FF6B6B" // Background color for the unfilled portion
+          />
           <View style={styles.textWrapper}>
             <Text style={styles.riskFactor}>821</Text>
             <Text style={styles.riskLabel}>Your risk factor is</Text>
@@ -93,15 +71,13 @@ const ProfileScreen = () => {
       <View style={styles.recentInteractions}>
         <Text style={styles.recentText}>Recent Interactions</Text>
         <View style={styles.interactionItem}>
-          <View>
+          <View style={styles.interactionBox}>
             <Text style={styles.interactionName}>Urdan Inc.</Text>
-            <Text style={styles.interactionType}>URDAN</Text>
-          </View>
-          <View>
             <Text style={styles.interactionPrice}>$213.22</Text>
             <Text style={styles.interactionChange}>+2.49 (8%)</Text>
           </View>
         </View>
+        {/* Add more interaction items if needed */}
       </View>
     </ScrollView>
   );
@@ -110,13 +86,13 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
-    paddingHorizontal: 15,
+    backgroundColor: '#fff',
   },
   logoContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 10,
+    paddingHorizontal: 20,
   },
   logo: {
     width: 30,
@@ -129,60 +105,51 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     color: '#000',
   },
-  profileSection: {
-    flexDirection: 'row',
+  header: {
     alignItems: 'center',
     paddingVertical: 20,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    marginVertical: 10,
-    padding: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 3,
+    borderBottomWidth: 1,
+    borderColor: '#ddd',
   },
   profileImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
   },
-  profileDetails: {
-    marginLeft: 15,
-  },
-  profileName: {
-    fontSize: 16,
+  name: {
+    fontSize: 18,
     fontWeight: 'bold',
   },
-  profileTitle: {
+  title: {
     fontSize: 14,
     color: '#777',
   },
-  profileEmail: {
-    fontSize: 13,
+  email: {
+    fontSize: 14,
     color: '#777',
   },
-  profilePhone: {
-    fontSize: 13,
+  phone: {
+    fontSize: 14,
     color: '#777',
   },
   infoContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 10,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    marginVertical: 10,
-    padding: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 3,
+    justifyContent: 'space-between',
+    paddingVertical: 20,
+    paddingHorizontal: 15,
   },
   infoBox: {
+    backgroundColor: '#f9f9f9',
+    padding: 10,
+    borderRadius: 10,
     alignItems: 'center',
+    width: '30%', // Adjust width to evenly space the boxes
+    elevation: 2, // Add shadow for Android
+    shadowColor: '#000', // Add shadow for iOS
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 1.41,
   },
   infoValue: {
     fontSize: 18,
@@ -196,20 +163,14 @@ const styles = StyleSheet.create({
   riskContainer: {
     paddingVertical: 20,
     alignItems: 'center',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#ddd',
     marginVertical: 10,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 3,
   },
   riskText: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 10,
   },
   gaugeContainer: {
     alignItems: 'center',
@@ -218,16 +179,16 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     position: 'absolute',
-    top: '50%', 
+    top: '50%', // Adjust the positioning of the text inside the gauge
     alignItems: 'center',
   },
   riskFactor: {
-    fontSize: 28,
+    fontSize: 36,
     fontWeight: 'bold',
     color: '#00c853',
   },
   riskLabel: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#777',
   },
   recentInteractions: {
@@ -237,38 +198,32 @@ const styles = StyleSheet.create({
   recentText: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginBottom: 10,
   },
   interactionItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingVertical: 10,
-    paddingHorizontal: 15,
+  },
+  interactionBox: {
+    backgroundColor: '#f9f9f9',
+    padding: 10,
     borderRadius: 10,
-    backgroundColor: '#fff',
-    marginVertical: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 3,
+    elevation: 2, // Shadow for Android
+    shadowColor: '#000', // Shadow for iOS
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 1.41,
   },
   interactionName: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
-  },
-  interactionType: {
-    fontSize: 12,
-    color: '#aaa',
   },
   interactionPrice: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'right',
+    fontSize: 14,
+    color: '#000',
   },
   interactionChange: {
-    fontSize: 12,
+    fontSize: 14,
     color: 'green',
-    textAlign: 'right',
   },
 });
 

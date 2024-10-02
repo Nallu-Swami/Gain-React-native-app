@@ -14,18 +14,6 @@ const data = {
   ]
 };
 
-const CardItem = ({ name, bank, amount, change }) => (
-  <View style={styles.itemContainer}>
-    <View style={styles.itemTextContainer}>
-      <Text style={styles.itemTitle}>{name}</Text>
-      <Text style={styles.itemSubtitle}>{bank}</Text>
-    </View>
-    <View style={styles.itemAmountContainer}>
-      <Text style={styles.itemAmount}>{amount}</Text>
-      <Text style={styles.itemChange}>{change}</Text>
-    </View>
-  </View>
-);
 
 const App: React.FC = () => {
   return (
@@ -41,7 +29,7 @@ const App: React.FC = () => {
 
       <Text style={styles.reportTitle}>Report</Text>
 
-      {/* Final Comparison Section */}
+      {/* Final Comparison Section
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Final Comparison</Text>
         {data.final_comparison.map((item, index) => (
@@ -53,21 +41,10 @@ const App: React.FC = () => {
             change={item.change}
           />
         ))}
-      </View>
+      </View> */}
 
       {/* Suggested Schemes Section */}
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Suggested Schemes</Text>
-        {data.suggested_schemes.map((item, index) => (
-          <CardItem
-            key={index}
-            name={item.name}
-            bank={item.bank}
-            amount={item.amount}
-            change={item.change}
-          />
-        ))}
-      </View>
+     ?
     </ScrollView>
   );
 };
