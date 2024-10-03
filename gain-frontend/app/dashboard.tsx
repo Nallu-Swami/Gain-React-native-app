@@ -66,19 +66,16 @@ export default function UserData() {
               data: investmentData.mutual_funds,
               color: () => '#ffd700',
               strokeWidth: 2,
-              label: 'Mutual Funds'
             },
             {
               data: investmentData.gold,
               color: () => '#ff9800',
               strokeWidth: 2,
-              label: 'Gold'
             },
             {
               data: investmentData.fixed_deposits,
               color: () => '#4caf50',
               strokeWidth: 2,
-              label: 'Fixed Deposits'
             },
           ]
         }}
@@ -88,6 +85,8 @@ export default function UserData() {
         bezier
         style={styles.chart}
         fromZero
+        withInnerLines={false}
+        withOuterLines={false}
       />
       
       <View style={styles.legendContainer}>
@@ -141,7 +140,7 @@ export default function UserData() {
           labels: labels,
           datasets: [
             {
-              data: investmentData.mutual_funds
+              data: investmentData.mutual_funds,
             }
           ]
         }}
@@ -160,7 +159,7 @@ export default function UserData() {
       {/* Top section with the logo and greeting */}
       <View style={styles.headerContainer}>
         <Image source={require('../assets/images/logooo.png')} style={styles.logo} />
-        <Text style={styles.greeting}>Hello Alex 👋</Text>
+        <Text style={styles.greeting}>Hello Mark 👋</Text>
       </View>
 
       {/* Search bar */}

@@ -9,16 +9,16 @@ const ProfileScreen = () => {
       {/* Logo and GAIN text section */}
       <View style={styles.logoContainer}>
         <Image
-          source={require('../assets/images/logooo.png')} // Make sure the path is correct
+          source={require('../assets/images/logooo.png')} // Ensure path is correct
           style={styles.logo}
         />
-        <Text style={styles.gainText}>GAIN</Text> {/* Wrapping the GAIN text properly */}
+        <Text style={styles.gainText}>GAIN</Text>
       </View>
 
       {/* User Profile Section */}
       <View style={styles.header}>
         <Image
-          source={require('../assets/images/mark_zuckerberg.png')} // Make sure the path is correct
+          source={require('../assets/images/mark_zuckerberg.png')} // Ensure path is correct
           style={styles.profileImage}
         />
         <Text style={styles.name}>MARK ZUCKERBERG</Text>
@@ -41,7 +41,7 @@ const ProfileScreen = () => {
         </View>
         <View style={styles.infoBox}>
           <FontAwesome5 name="piggy-bank" size={24} color="#000" />
-          <Text style={styles.infoValue}>50K</Text>
+          <Text style={styles.infoValue}>20K</Text>
           <Text style={styles.infoLabel}>SAVINGS</Text>
         </View>
       </View>
@@ -54,14 +54,14 @@ const ProfileScreen = () => {
             size={180}
             width={10}
             fill={75}
-            arcSweepAngle={180}
-            rotation={-90}
+            // Removed arcSweepAngle to create a full circle
+            rotation={0}
             lineCap="round"
             tintColor="#4CAF50"
             backgroundColor="#FF6B6B"
           />
           <View style={styles.textWrapper}>
-            <Text style={styles.riskFactor}>821</Text>
+            <Text style={styles.riskFactor}>2.5</Text>
             <Text style={styles.riskLabel}>Your risk factor is</Text>
           </View>
         </View>
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     position: 'absolute',
-    top: '50%',
+    top: '40%', // Adjusted for better alignment
     alignItems: 'center',
   },
   riskFactor: {
